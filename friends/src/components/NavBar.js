@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Route, Link } from 'react-router-dom';
+import {  Route, NavLink } from 'react-router-dom';
 import Login from './Login'
 
 const NavBar = () => {
@@ -7,12 +7,15 @@ const NavBar = () => {
         <>
             <ul>
                 <li>
-                    <Link to='/login'>Login</Link>
+                    <NavLink to='/'>Home</NavLink>
+                </li>
+                <li>
+                    <NavLink to='/login'>Login</NavLink>
                 </li>
             </ul>
             <Route path='/login' component={Login} />
         </>
-    )
+    );
 }
 
 export default NavBar;

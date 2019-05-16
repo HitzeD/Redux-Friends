@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from "react-redux";
+import { login } from "../actions";
 
 class Login extends React.Component {
     constructor(){
@@ -6,7 +8,7 @@ class Login extends React.Component {
         this.state = {
             credentials: {
                 username: '',
-                password: '',
+                password: ''
             }
         }
     }
@@ -14,21 +16,36 @@ class Login extends React.Component {
     handleChanges = e => {
         e.preventDefault();
         this.setState({ 
-            ...this.state,
-            credentials: { [e.target.name]: e.target.value },
+            credentials: {
+                ...this.state.credentials,
+                [e.target.name]: e.target.value
+            }
         })
     }
 
+    login = e => {
+        e.preventDefault();
+        this.props.login(this.state.credentials).then(() => {
+          this.props.history.push("/protected");
+        });
+    };
     
 
     render(){
         return (
             <div>
-                <input onChange={this.handleChanges} name="user" value={this.state.credentials.username} type="text" placeholder="Enter Username" />
-                <input onChange={this.handleChanges} name="pass" value={this.state.credentials.password} type="password" placeholder="Enter Password" />
+                <form onSubmit={this.login}>
+                    <input onChange={this.handleChanges} name="username" value={this.state.credentials.username} type="text" placeholder="Enter Username" />
+                    <input onChange={this.handleChanges} name="password" value={this.state.credentials.password} type="password" placeholder="Enter Password" />
+                    <button>Submit</button>    
+                </form>
             </div>
         )
     }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    loggingIn: state.loggingIn
+})
+
+export default connect(mapStateToProps, { login })(Login);
