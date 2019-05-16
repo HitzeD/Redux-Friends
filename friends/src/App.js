@@ -8,7 +8,6 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <h1>TEST</h1>
       <PrivateRoute exact path="/protected" component={Friends} />
     </div>
   );
